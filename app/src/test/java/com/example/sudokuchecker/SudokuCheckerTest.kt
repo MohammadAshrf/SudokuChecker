@@ -89,4 +89,75 @@ class SudokuCheckerTest {
         board.add(MutableList(10) { '-' })
         assertFalse(checker.isValidSudoku(board))
     }
+
+    @Test
+    fun `when 4x4 board is valid then return true`() {
+        val board = listOf(
+            listOf('1', '2', '3', '4'),
+            listOf('3', '4', '1', '2'),
+            listOf('2', '1', '4', '3'),
+            listOf('4', '3', '2', '1')
+        )
+        assertTrue(checker.isValidSudoku(board))
+    }
+
+    @Test
+    fun `when 4x4 board has duplicate in row then return false`() {
+        val board = listOf(
+            listOf('1', '1', '3', '4'),
+            listOf('3', '4', '1', '2'),
+            listOf('2', '3', '4', '1'),
+            listOf('4', '2', '1', '3')
+        )
+        assertFalse(checker.isValidSudoku(board))
+    }
+
+    @Test
+    fun `when 4x4 board has duplicate in column then return false`() {
+        val board = listOf(
+            listOf('1', '2', '3', '4'),
+            listOf('3', '4', '1', '2'),
+            listOf('2', '1', '4', '3'),
+            listOf('1', '3', '2', '1')
+        )
+        assertFalse(checker.isValidSudoku(board))
+    }
+
+    @Test
+    fun `when 4x4 board has duplicate in 2x2 box then return false`() {
+        val board = listOf(
+            listOf('1', '2', '3', '4'),
+            listOf('3', '1', '4', '2'),
+            listOf('2', '3', '1', '4'),
+            listOf('4', '1', '2', '3')
+        )
+        assertFalse(checker.isValidSudoku(board))
+    }
+
+    @Test
+    fun `when 16x16 board is partially valid then return true`() {
+        val board = List(16) { MutableList(16) { '-' } }
+        board[0][0] = '1'
+        board[0][1] = '2'
+        board[0][2] = '3'
+        board[1][0] = '4'
+        board[3][3] = 'A'
+        board[5][5] = 'G'
+        assertTrue(checker.isValidSudoku(board))
+    }
+
+    @Test
+    fun `when 16x16 board has duplicate in box then return false`() {
+        val board = List(16) { MutableList(16) { '-' } }
+        board[0][0] = 'B'
+        board[3][3] = 'B'
+        assertFalse(checker.isValidSudoku(board))
+    }
+
+    @Test
+    fun `when 16x16 board has invalid character then return false`() {
+        val board = List(16) { MutableList(16) { '-' } }
+        board[0][0] = 'Z'
+        assertFalse(checker.isValidSudoku(board))
+    }
 }
