@@ -75,4 +75,18 @@ class SudokuCheckerTest {
         board[3][3] = '0'
         assertFalse(checker.isValidSudoku(board))
     }
+
+    @Test
+    fun `when board has a row shorter than size then return false`() {
+        val board = List(8) { MutableList(9) { '-' } }.toMutableList()
+        board.add(MutableList(8) { '-' })
+        assertFalse(checker.isValidSudoku(board))
+    }
+
+    @Test
+    fun `when board has a row longer than size then return false`() {
+        val board = List(8) { MutableList(9) { '-' } }.toMutableList()
+        board.add(MutableList(10) { '-' })
+        assertFalse(checker.isValidSudoku(board))
+    }
 }
